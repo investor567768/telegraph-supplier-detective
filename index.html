@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Supplier.Detective: checks a supplier before you pay</title>
+<meta name="description" content="A Mind that checks a supplier invoice against company registers and sanctions lists, using Telegraph through Anjoman, and answers RELEASE, HOLD or REVIEW.">
+<style>
+  :root { --bg:#0f1115; --card:#171a21; --line:#262b35; --text:#e8eaf0; --muted:#9aa3b2; --accent:#5b8cff; --hold:#ff6b6b; --ok:#3ecf8e; --review:#f5b942; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+  .wrap { max-width:960px; margin:0 auto; padding:32px 20px 64px; }
+  h1 { font-size:2.2rem; line-height:1.2; margin:0 0 8px; }
+  h2 { font-size:1.35rem; margin:40px 0 12px; }
+  p { margin:0 0 12px; }
+  a { color:var(--accent); }
+  .muted { color:var(--muted); }
+  .tag { display:inline-block; font-size:.8rem; padding:2px 10px; border:1px solid var(--line); border-radius:999px; color:var(--muted); margin:0 6px 6px 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 20px; margin:12px 0; }
+  .grid { display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .num { font-size:1.6rem; font-weight:700; }
+  table { width:100%; border-collapse:collapse; font-size:.92rem; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  .v { font-weight:700; }
+  .v.HOLD { color:var(--hold); } .v.RELEASE { color:var(--ok); } .v.REVIEW { color:var(--review); }
+  .scroll { overflow-x:auto; }
+  .btns a { display:inline-block; margin:6px 8px 0 0; padding:9px 14px; border-radius:8px; background:var(--accent); color:#fff; text-decoration:none; font-weight:600; }
+  .btns a.ghost { background:transparent; border:1px solid var(--line); color:var(--text); }
+  form { display:flex; gap:8px; flex-wrap:wrap; }
+  input { flex:1 1 260px; padding:10px 12px; border-radius:8px; border:1px solid var(--line); background:#0c0e12; color:var(--text); font-size:1rem; }
+  button { padding:10px 16px; border-radius:8px; border:0; background:var(--accent); color:#fff; font-weight:600; font-size:1rem; cursor:pointer; }
+  .chips button { background:transparent; border:1px solid var(--line); color:var(--muted); padding:5px 10px; font-size:.85rem; font-weight:500; margin:8px 6px 0 0; }
+  #out .row { border-top:1px solid var(--line); padding:10px 0; }
+  ol { padding-left:20px; } li { margin-bottom:6px; }
+  footer { margin-top:48px; font-size:.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <span class="tag">Telegraph Hackathon Season II</span><span class="tag">Apps &amp; Agents</span><span class="tag">Built on Minds by Animoca Brands</span>
+  <h1>Supplier.Detective</h1>
+  <p>A Mind that checks a supplier before a payment goes out. It reads the invoice and the purchase order, buys verified facts from Telegraph through <a href="https://anjoman.ai">Anjoman</a>, double-checks anything missing or doubtful against free official sources, and ends with one verdict: <b class="v RELEASE">RELEASE</b>, <b class="v HOLD">HOLD</b> or <b class="v REVIEW">REVIEW</b>. Every source, correction and cent spent is listed.</p>
+  <div class="btns">
+    <a href="https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11">Open the Mind</a>
+    <a class="ghost" href="https://github.com/investor567768/telegraph-supplier-detective">Source and case files</a>
+    <a class="ghost" href="https://github.com/investor567768/telegraph-supplier-detective/blob/main/SETUP.md">Connect your own Mind (15 min)</a>
+  </div>
+
+  <div class="grid" style="margin-top:24px">
+    <div class="card"><div class="num">6 of 6</div><div class="muted">test runs reached the correct verdict (3 cases, with and without Telegraph)</div></div>
+    <div class="card"><div class="num">1</div><div class="muted">real provider bug found, confirmed and fixed by its builder</div></div>
+    <div class="card"><div class="num">$0.06 to $0.11</div><div class="muted">spent per full check with Telegraph</div></div>
+  </div>
+
+  <h2>What it checks</h2>
+  <ol>
+    <li><b>Who the supplier really is:</b> legal name, address and register number against GLEIF and the register Telegraph returns.</li>
+    <li><b>Sanctions and export lists:</b> OFAC SDN and NS-CMIC, EU, UK, UN and the US BIS Entity List.</li>
+    <li><b>The paperwork:</b> quantities, prices and totals on the invoice against the purchase order.</li>
+    <li><b>The website:</b> whether the supplier's domain is reported as malicious.</li>
+  </ol>
+  <p class="muted">Where a paid answer is missing, partial or contradicts another source, the Mind says so and checks again with a free official source. It never treats an empty answer as "clean".</p>
+
+  <h2>Test cases: with and without Telegraph</h2>
+  <p>Each case was run twice in a fresh thread: once with Telegraph (Ask Anjoman plus free sources) and once without (web search plus the same free sources). Our "without" side is not empty-handed. It can still search the web and read official lists, which makes it a hard comparison to win.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Case</th><th>Correct answer</th><th>With Telegraph</th><th>Without Telegraph</th></tr></thead>
+    <tbody>
+      <tr><td><b>Siemens AG</b>, clean invoice (control)</td><td class="v RELEASE">RELEASE</td><td><span class="v RELEASE">RELEASE</span><br><span class="muted">6 paid calls, $0.11</span></td><td><span class="v RELEASE">RELEASE</span><br><span class="muted">EU and OFAC rested on web search only</span></td></tr>
+      <tr><td><b>Hikvision</b>, on the US BIS Entity List and OFAC NS-CMIC, invoice $2,000 over the PO</td><td class="v HOLD">HOLD</td><td><span class="v HOLD">HOLD</span>, caught both problems<br><span class="muted">5 paid calls, $0.08</span></td><td><span class="v HOLD">HOLD</span>, caught both problems<br><span class="muted">UN file failed 3 times; OFAC, EU, UK from web search</span></td></tr>
+      <tr><td><b>"Siemens AG"</b> invoice carrying Siemens Energy AG's address and register (HRB 252581)</td><td><span class="v HOLD">HOLD</span> or <span class="v REVIEW">REVIEW</span></td><td><span class="v HOLD">HOLD</span>, named the real entity<br><span class="muted">4 paid calls, $0.06</span></td><td><span class="v HOLD">HOLD</span>, named the real entity<br><span class="muted">OFAC files cut off (85% confidence); EU and UK from search snippets (82%)</span></td></tr>
+    </tbody>
+  </table></div>
+  <div class="card">
+    <b>What the comparison shows, honestly:</b> both sides reached the right verdict every time. Telegraph made the evidence stronger, with direct list answers from providers instead of search snippets and fewer failed downloads. The register catches came from GLEIF, a free source, on both sides. That is why the Mind always pairs paid answers with a free second source.
+  </div>
+
+  <h2>A real bug it found</h2>
+  <div class="card">
+    Asked for Siemens AG's German register number, a Telegraph provider returned the company's LEI instead. The Mind noticed the answer had the wrong shape, held the decision, recovered the real number (HRB 6684, Amtsgericht München) through GLEIF, and only then released. The provider's builder confirmed the bug in the Telegraph Discord and fixed it. <a href="https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg">See the receipt</a>.
+  </div>
+
+  <h2>Try the free first step yourself</h2>
+  <p>The register check that caught the Siemens trap uses GLEIF's public data. Type a company name, an LEI or a register number such as <code>HRB 252581</code>. This box only searches GLEIF and spends nothing. The full check runs inside the Mind.</p>
+  <div class="card">
+    <form id="f"><input id="q" placeholder="Company name, LEI or register number" autocomplete="off"><button>Search GLEIF</button></form>
+    <div class="chips">
+      <button type="button" data-q="HRB 252581">HRB 252581</button>
+      <button type="button" data-q="HRB 6684">HRB 6684</button>
+      <button type="button" data-q="Hangzhou Hikvision">Hangzhou Hikvision</button>
+    </div>
+    <div id="out" class="muted" style="margin-top:12px"></div>
+  </div>
+
+  <h2>Where it fits in Telegraph's missions</h2>
+  <p>The intents it buys appear in <b>03 Institutional Markets</b> (company registry, sanctions, FX) and <b>04 Legal</b> (registry, sanctions), and also in 01, 05 and 08 (sanctions) and 07 and 15 (website safety).</p>
+
+  <footer class="muted">
+    Built by Chrysolite for Telegraph Hackathon Season II. Paid answers come from Telegraph providers through Anjoman (testnet USDC). Free sources: GLEIF, UN, OFAC, EU, UK, Federal Register and eCFR. The Mind's API key is never stored on this page.
+  </footer>
+</div>
+<script>
+const out = document.getElementById('out');
+const q = document.getElementById('q');
+function esc(s){ return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+async function search(term){
+  term = term.trim(); if(!term) return;
+  out.textContent = 'Searching GLEIF…';
+  const isLei = /^[A-Z0-9]{20}$/i.test(term);
+  const url = isLei
+    ? 'https://api.gleif.org/api/v1/lei-records/' + encodeURIComponent(term.toUpperCase())
+    : 'https://api.gleif.org/api/v1/lei-records?filter[fulltext]=' + encodeURIComponent(term) + '&page[size]=5';
+  try {
+    const r = await fetch(url, { headers: { Accept: 'application/vnd.api+json' } });
+    if (r.status === 404) { out.textContent = 'No GLEIF record found.'; return; }
+    if (!r.ok) throw new Error('GLEIF answered ' + r.status);
+    const j = await r.json();
+    const list = Array.isArray(j.data) ? j.data : [j.data];
+    if (!list.length) { out.textContent = 'No GLEIF record found for "' + term + '".'; return; }
+    out.innerHTML = list.map(d => {
+      const e = d.attributes.entity, reg = d.attributes.registration, a = e.legalAddress || {};
+      return '<div class="row"><b style="color:var(--text)">' + esc(e.legalName && e.legalName.name) + '</b><br>' +
+        'LEI ' + esc(d.attributes.lei) + ' · ' + esc(e.status) + ' · ' + esc(reg && reg.status) + '<br>' +
+        'Register number: ' + esc(e.registeredAs || 'not listed') + '<br>' +
+        'Address: ' + esc([(a.addressLines||[]).join(', '), a.postalCode, a.city, a.country].filter(Boolean).join(', ')) + '</div>';
+    }).join('') + '<div class="row">Source: GLEIF public API, read just now.</div>';
+  } catch (err) {
+    out.textContent = 'Could not reach GLEIF (' + err.message + '). Try again in a moment.';
+  }
+}
+document.getElementById('f').addEventListener('submit', e => { e.preventDefault(); search(q.value); });
+document.querySelectorAll('.chips button').forEach(b => b.addEventListener('click', () => { q.value = b.dataset.q; search(b.dataset.q); }));
+</script>
+</body>
+</html>
