@@ -52,14 +52,16 @@
   @media (max-width:640px){ .nav a.opt { display:none; } }
 
   /* hero */
-  .hero { position:relative; padding:56px 0 76px; }
+  .hero { position:relative; padding:40px 0 64px; }
   .hero::before { content:""; position:absolute; inset:-60px 0 auto 0; height:560px; background:radial-gradient(640px 340px at 80% 30%, var(--bg-glow), transparent 70%); pointer-events:none; }
   .hero-grid { position:relative; display:grid; gap:44px; grid-template-columns:1fr; align-items:center; }
   @media (min-width:920px){ .hero-grid { grid-template-columns:1fr 1.1fr; } }
   .pill-top { display:inline-flex; gap:8px; align-items:center; border:1px solid var(--line-2); background:var(--surface); padding:6px 12px; border-radius:999px; font-size:.86rem; color:var(--muted); margin-bottom:20px; }
   .dot { width:8px; height:8px; border-radius:50%; background:var(--ok); }
-  h1 { font-size:clamp(2.4rem,7.6vw,4.3rem); font-weight:800; letter-spacing:-.035em; }
-  .lede { font-size:1.1rem; color:var(--muted); margin:20px 0 26px; }
+  h1 { font-size:clamp(2rem,5.4vw,3.3rem); font-weight:800; letter-spacing:-.035em; }
+  .lede { font-size:1.05rem; color:var(--muted); margin:16px 0 22px; }
+  .skip { display:inline-block; margin-top:16px; color:var(--muted); font-size:.93rem; text-decoration:none; }
+  .skip:hover { color:var(--text); }
   .btns { display:flex; flex-wrap:wrap; gap:10px; }
   .btn { display:inline-block; padding:12px 18px; border-radius:12px; font:600 .98rem 'Geist',sans-serif; text-decoration:none; border:1px solid var(--line-2); color:var(--text); background:var(--surface); }
   .btn:hover { border-color:var(--accent); }
@@ -141,7 +143,28 @@
   ul.plain li { margin-bottom:8px; }
   footer { padding:40px 0 64px; border-top:1px solid var(--line); color:var(--muted); font-size:.92rem; }
   footer p { max-width:80ch; }
-  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } .badge.pop{ animation:none; } }
+  /* scroll reveal (only when JS is on) */
+  .js .rv { opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d,0s); }
+  .js .rv.in { opacity:1; transform:none; }
+
+  /* tap-to-open sections */
+  details.fold { background:var(--surface); border:1px solid var(--line); border-radius:18px; }
+  details.fold + details.fold { margin-top:14px; }
+  details.fold > summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:20px 22px; font-size:clamp(1.3rem,3.6vw,1.8rem); font-weight:700; letter-spacing:-.02em; }
+  details.fold > summary::-webkit-details-marker { display:none; }
+  details.fold > summary::after { content:""; flex:none; width:11px; height:11px; border-right:2px solid var(--muted); border-bottom:2px solid var(--muted); transform:rotate(45deg); transition:transform .25s; margin-right:4px; }
+  details.fold[open] > summary::after { transform:rotate(-135deg); }
+  details.fold .fold-body { padding:0 22px 22px; }
+  details.fold .steps { margin-top:6px; }
+  details.fold .ba { margin-top:14px; }
+  details.fold .ba .card, details.fold .steps li { background:var(--surface-2); }
+
+  .foot-links { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:22px; }
+  .foot-links a { display:inline-flex; gap:8px; align-items:center; padding:10px 14px; border:1px solid var(--line-2); border-radius:12px; color:var(--text); text-decoration:none; font-weight:600; font-size:.95rem; background:var(--surface); }
+  .foot-links a:hover { border-color:var(--accent); }
+  .foot-links a span { color:var(--accent); }
+
+  @media (prefers-reduced-motion:reduce){ .js .rv { opacity:1; transform:none; transition:none; }  html{ scroll-behavior:auto; } .badge.pop{ animation:none; } }
 </style>
 </head>
 <body>
@@ -153,7 +176,6 @@
       <a class="opt" href="#lookup">Free lookup</a>
       <a class="opt" href="#results">Results</a>
       <a class="opt" href="#setup">Build your own</a>
-      <a href="https://github.com/investor567768/telegraph-supplier-detective">Code</a>
       <button class="theme" id="theme" type="button" aria-label="Switch between dark and light mode"><span id="themeIcon">☀</span><span id="themeText">Light</span></button>
     </nav>
   </div>
@@ -170,6 +192,7 @@
         <a class="btn primary" href="#lookup">Try the free lookup</a>
         <a class="btn" href="https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11">Open the Mind</a>
       </div>
+      <a class="skip" href="#results">Skip to the results &darr;</a>
     </div>
 
     <div>
@@ -208,15 +231,19 @@
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="how">
   <div class="wrap">
-    <h2>How a check works.</h2>
-    <ol class="steps">
+    <details class="fold" id="fold-how">
+      <summary>How a check works</summary>
+      <div class="fold-body">
+        <ol class="steps">
       <li><b>Read the paperwork</b><span>Invoice and purchase order: names, register number, address, quantities and totals.</span></li>
       <li><b>Buy the facts</b><span>Register, sanctions and website answers, bought from Telegraph through Anjoman under a spend limit.</span></li>
       <li><b>Check the answers</b><span>Anything missing, partial or conflicting is checked again against a free official source.</span></li>
       <li><b>One verdict</b><span>RELEASE, HOLD or REVIEW, with every source, correction and cost listed. An empty answer is never called clean.</span></li>
     </ol>
+      </div>
+    </details>
   </div>
 </section>
 
@@ -254,15 +281,20 @@
   </div>
 </section>
 
-<section class="block">
+<section class="block" id="bug">
   <div class="wrap">
-    <h2>It found a real bug.</h2>
-    <p class="muted">Asked for Siemens AG's register number, one Telegraph provider returned the company's LEI instead. The provider's builder confirmed it and fixed it. <a href="https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg">See the receipt.</a></p>
+    <details class="fold" id="fold-bug">
+      <summary>It found a real bug in a provider</summary>
+      <div class="fold-body">
+        <p class="muted">Asked for Siemens AG's register number, one Telegraph provider returned the company's LEI instead. The provider's builder confirmed it and fixed it. <a href="https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg">See the receipt.</a></p>
     <div class="ba">
       <div class="card"><h3>The answer was the wrong shape</h3><p class="muted">A register number was requested. An LEI came back.</p></div>
       <div class="card"><h3>The Mind held the decision</h3><p class="muted">It recovered HRB 6684 (Amtsgericht München) from GLEIF before releasing.</p></div>
       <div class="card"><h3>The provider fixed it</h3><p class="muted">The builder confirmed the bug in the Telegraph Discord.</p></div>
     </div>
+
+      </div>
+    </details>
   </div>
 </section>
 
@@ -272,7 +304,7 @@
     <p class="muted">The setup guide connects any Mind to Anjoman using only the Mind's HTTP tool and an API key. The key stays in the Mind's private store, never on this site.</p>
     <div class="btns">
       <a class="btn primary" href="https://github.com/investor567768/telegraph-supplier-detective/blob/main/SETUP.md">Open the setup guide</a>
-      <a class="btn" href="https://github.com/investor567768/telegraph-supplier-detective">Code and case files</a>
+      <a class="btn" href="https://github.com/investor567768/telegraph-supplier-detective">Code and case files &#8599;</a>
     </div>
 
     <div class="strip">
@@ -296,11 +328,35 @@
 
 <footer>
   <div class="wrap">
+    <div class="foot-links">
+      <a href="https://github.com/investor567768/telegraph-supplier-detective">Code <span>&#8599;</span></a>
+      <a href="https://github.com/investor567768/telegraph-supplier-detective/blob/main/SETUP.md">Setup guide <span>&#8599;</span></a>
+      <a href="https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11">The Mind <span>&#8599;</span></a>
+    </div>
     <p>Built by Chrysolite for Telegraph Hackathon Season II. Paid answers come from Telegraph providers through Anjoman. Free sources: GLEIF, UN, OFAC, EU, UK, Federal Register and eCFR.</p>
   </div>
 </footer>
 
 <script>
+/* scroll reveal */
+(function(){
+  const noAnim = matchMedia('(prefers-reduced-motion: reduce)').matches || new URLSearchParams(location.search).has('noanim') || !('IntersectionObserver' in window);
+  if (innerWidth >= 900) document.querySelectorAll('details.fold').forEach(d => d.open = true);
+  if (noAnim) return;
+  document.documentElement.classList.add('js');
+  const sel = '.block h2, .block > .wrap > p, .block > .wrap > .btns, .kicker, .card, .steps li, .cmp, .honest, .strip div, details.fold, .block h3, .block ul.plain, .foot-links, footer p';
+  const els = [...document.querySelectorAll(sel)].filter(el => !el.closest('.hero'));
+  els.forEach(el => {
+    el.classList.add('rv');
+    const sibs = [...el.parentElement.children].filter(x => x.classList.contains('rv') || els.includes(x));
+    el.style.setProperty('--d', Math.min(sibs.indexOf(el) * 0.08, 0.4) + 's');
+  });
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(el => io.observe(el));
+})();
+
 /* theme */
 const root=document.documentElement, tBtn=document.getElementById('theme');
 function setTheme(t,save){
