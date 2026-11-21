@@ -8,15 +8,33 @@ Built for Telegraph Hackathon Season II, Apps & Agents track.
 
 ## For judges
 
-| Question | Where to look |
+The table uses the organizers' own criterion names from the rules (Section 6, Apps & Agents).
+
+| Criterion | Where to look |
 |---|---|
-| Does it work, and can I try it? | [Live site](https://telegraph-supplier-detective.vercel.app/). The box on the page searches GLEIF for free (try `HRB 252581`). The full check runs inside the [Mind](https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11) (Mind ID `3be43c42-f36b-1410-8467-00039ce7df11`). |
-| How does it use Telegraph? | It buys company-register, sanctions (OFAC, EU, UK, UN, BIS) and website-safety answers through Anjoman, with a spend limit on every check. Real receipt: [Siemens check](https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg). |
-| Does Telegraph make a difference? | Yes, in evidence quality, not in the verdict. See [with and without Telegraph](#with-and-without-telegraph) below. Both sides reached the right verdict on every case, and we say so plainly. |
-| Did it find anything real? | Yes: a [bug in a Telegraph provider](#a-real-bug-it-found), confirmed and fixed by the provider's builder. |
-| Can I build my own? | [SETUP.md](SETUP.md) connects any Mind to Anjoman in about 15 minutes. |
-| Which missions does it serve? | 03 Institutional Markets and 04 Legal first (company registry, sanctions, FX), then 01, 05 and 08 (sanctions) and 07 and 15 (website safety). |
-| What does a check cost? | About $0.06 to $0.11 on testnet USDC, with every paid call listed. |
+| Technical quality and mainnet readiness | Every check runs under a spend limit, second-sources every paid answer and never treats an empty answer as clean (see [What it checks](#what-it-checks) and [Limits we found](#with-and-without-telegraph)). It runs on the Telegraph **testnet** with testnet USDC today. We have not run it on mainnet. |
+| Commercial viability | [Commercial summary](#commercial-summary) below: who it is for, what it improves, what it does today, why someone would adopt it, how to try it. |
+| Genuine independent adoption and retention | The [setup guide](SETUP.md) was shared publicly in the Minds thread so other builders can connect their own Mind. We have not yet confirmed another builder running it, and will list any who do here. |
+| Telegraph network integration and usage quality | The Mind buys register, sanctions (OFAC, EU, UK, UN, BIS) and website-safety answers through Anjoman, with a spend limit on every check. Real receipt: [Siemens check](https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg). Missions served: 03 Institutional Markets and 04 Legal first, then 01, 05, 08, 07 and 15. |
+| Reproducibility, demo/tutorial, and verifiable proof | [Live site](https://telegraph-supplier-detective.vercel.app/) (the box searches GLEIF for free, try `HRB 252581`), [SETUP.md](SETUP.md), the [with-and-without comparison](#with-and-without-telegraph), a [bug found in a provider](#a-real-bug-it-found) and the receipt above. A demo video is coming. |
+| Organic growth, education, and developer activation | [SETUP.md](SETUP.md) (15-minute guide), the live site, and our public progress posts in the Minds showcase. |
+
+## Commercial summary
+
+- **Who it is for:** small finance and procurement teams that pay suppliers by bank transfer and cannot afford a full compliance department.
+- **What it improves:** a payment is checked against company registers and sanctions lists, and against the purchase order, before the money leaves. Mismatched identities, listed suppliers and invoice gaps are caught.
+- **What it does today:** takes an invoice and a purchase order, buys verified facts through Anjoman, second-sources anything doubtful for free, and returns RELEASE, HOLD or REVIEW with every source and cost listed. A check costs about $0.06 to $0.11 on testnet.
+- **Why someone would adopt it:** a wrong payment to a sanctioned or misidentified supplier is far more expensive than a check, and every answer arrives with its sources so a person can verify it.
+- **How to try it:** the [live site](https://telegraph-supplier-detective.vercel.app/) for the free register lookup, the [Mind](https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11) for a full check, or [SETUP.md](SETUP.md) to build your own.
+
+## How to run it
+
+- **Prerequisites:** a Mind on Minds by Animoca Brands and an Anjoman API key (kept in the Mind's private store, never in this repository).
+- **Steps:** follow [SETUP.md](SETUP.md): store the key, teach the Ask Anjoman skill, set the spend rule, then test.
+- **Sample request:** paste an invoice and its purchase order into the Mind (for example the Siemens case from the comparison below).
+- **Expected result:** one verdict (RELEASE, HOLD or REVIEW), the reasons, a table of every source used and the total cost.
+- **Network and cost:** Telegraph testnet, testnet USDC, about $0.06 to $0.11 per check, under a spend limit set in the Mind.
+- **Known limitations:** some paid calls come back unanswered (the Mind reports this and uses a free second source); not tested on mainnet; the Mind's own usage (Cognitions) is limited.
 
 ## What it checks
 
