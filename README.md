@@ -16,7 +16,7 @@ The table uses the organizers' own criterion names from the rules (Section 6, Ap
 | Commercial viability | [Commercial summary](#commercial-summary) below: who it is for, what it improves, what it does today, why someone would adopt it, how to try it. |
 | Genuine independent adoption and retention | The [setup guide](SETUP.md) was shared publicly in the Minds thread so other builders can connect their own Mind. We have not yet confirmed another builder running it, and will list any who do here. |
 | Telegraph network integration and usage quality | The Mind buys register, sanctions (OFAC, EU, UK, UN, BIS) and website-safety answers through Anjoman, with a spend limit on every check. Real receipt: [Siemens check](https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg). Missions served: 03 Institutional Markets and 04 Legal first, then 01, 05, 08, 07 and 15. |
-| Reproducibility, demo/tutorial, and verifiable proof | [Live site](https://telegraph-supplier-detective.vercel.app/) (the box searches GLEIF for free, try `HRB 252581`), [SETUP.md](SETUP.md), the [with-and-without comparison](#with-and-without-telegraph), a [bug found in a provider](#a-real-bug-it-found) and the receipt above. A demo video is coming. |
+| Reproducibility, demo/tutorial, and verifiable proof | [Live site](https://telegraph-supplier-detective.vercel.app/) (the box searches GLEIF for free, try `HRB 252581`), [SETUP.md](SETUP.md), the [with-and-without comparison](#with-and-without-telegraph), a [bug found in a provider](#a-real-bug-it-found) and the receipt above. A [3-minute demo video](https://x.com/kingChrys494/status/2124415611216273892) shows the Siemens wrong-register case end to end. |
 | Organic growth, education, and developer activation | [SETUP.md](SETUP.md) (15-minute guide), the live site, and our public progress posts in the Minds showcase. |
 
 ## Commercial summary
@@ -71,6 +71,10 @@ Asked for Siemens AG's German register number, a Telegraph provider returned the
 
 **[SETUP.md](SETUP.md)** shows how to connect any Mind to Anjoman in about 15 minutes, using only the Mind's HTTP tool and an API key. The key stays in the Mind's private store and is never on the site or in this repository.
 
+## Demo video
+
+A 3-minute walkthrough of the Siemens wrong-register case, from invoice to HOLD verdict, with the live site and this comparison: [watch on X](https://x.com/kingChrys494/status/2124415611216273892).
+
 ## Coming next
 
-A demo video and an X post.
+More Intents and providers behind the same checks, and a second sanctions source from a different operator once we have tested it ourselves.
