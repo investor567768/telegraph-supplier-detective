@@ -76,6 +76,19 @@ Save this as a rule: for any company registry question, check GLEIF before concl
 
 Why it matters: when I asked Anjoman for Siemens AG's German register number, it returned the LEI instead. Because of this rule, the Mind noticed, held the decision, found **HRB 6684 (Amtsgericht München)** through GLEIF and corrected itself. Receipt: [anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg](https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg)
 
+## Optional: a two-provider rule for sanctions
+
+A sanctions screen is where one provider's answer is most dangerous to trust alone: a "not matched" can mean "clean" or "I checked a different list". This rule asks two Telegraph sanctions providers run by **different operators** the same question and only lets the Mind call a supplier clean when both say so. It uses [Takar Second Opinion](https://takar-telegraph.vercel.app) (free on testnet, no key; Takar pays the two asks), so it adds no cost to your escrow:
+
+```
+Save this as a rule: for any sanctions question, also make this HTTP call:
+POST https://takar-telegraph.vercel.app/api/second-opinion
+Body: {"intent": "SANCTIONS_SCREENING_MATCH_GENERAL", "params": {"name": "<legal name>"}, "fields": ["matched"], "client": "supplier-detective"}
+Read "verdict". "agree" means two providers from different operators gave the same "matched" value: use answer.matched. "disagree" or "insufficient" means do NOT call the supplier clean: hold and say which providers answered what (the "answers" list), with the two signal links.
+```
+
+Why it matters, from real runs on 21 Nov: for **Bank Rossiya** (OFAC SDN 16681) one provider returned `matched: null`, and a UN-list provider said "not matched", which is true for its list and wrong for an OFAC question. A Mind that took either answer alone would have released the payment. With this rule it held until two independent providers agreed on `matched: true`. Every call is recorded publicly on EAS ([feed](https://takar-telegraph.vercel.app/api/feed)), so `client: "supplier-detective"` also shows your Mind's usage there.
+
 ---
 
 ## Troubleshooting
