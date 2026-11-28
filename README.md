@@ -19,6 +19,16 @@ The table uses the organizers' own criterion names from the rules (Section 6, Ap
 | Reproducibility, demo/tutorial, and verifiable proof | [Live site](https://telegraph-supplier-detective.vercel.app/) (the box searches GLEIF for free, try `HRB 252581`), [SETUP.md](SETUP.md), the [with-and-without comparison](#with-and-without-telegraph), a [bug found in a provider](#a-real-bug-it-found) and the receipt above. A [3-minute demo video](https://x.com/kingChrys494/status/2124415611216273892) shows the Siemens wrong-register case end to end. |
 | Organic growth, education, and developer activation | [SETUP.md](SETUP.md) (15-minute guide), the live site, and our public progress posts in the Minds showcase. |
 
+## The five steps the organisers ask judges to take
+
+| Step | What to do here |
+|---|---|
+| Run it | Open the [live site](https://telegraph-supplier-detective.vercel.app/) and search GLEIF for free (try `HRB 252581`). For a full check, paste an invoice and its purchase order into the [Mind](https://hellominds.ai/profile/minds/3be43c42-f36b-1410-8467-00039ce7df11). |
+| Check it | The Mind ends with one verdict (RELEASE, HOLD or REVIEW), the reasons, and a table of every source and cost, so each claim can be checked against its source. |
+| Inspect it | The real receipt for the Siemens check is a [shared Anjoman page](https://anjoman.ai/shared/OVQKl9jT5_bGRr7K_7qIhg), and [docs/RESULTS.md](docs/RESULTS.md) logs every job. |
+| Break it | Give it the Siemens wrong-register case: the Mind returns HOLD, not RELEASE. An empty or unanswered paid call is never treated as clean; it is second-sourced from a free list and reported. |
+| Reproduce it | Follow [SETUP.md](SETUP.md) (15 minutes): store the key in a Mind, teach the Ask Anjoman skill, set the spend rule, then run the Siemens case from [With and without Telegraph](#with-and-without-telegraph). |
+
 ## Commercial summary
 
 - **Who it is for:** small finance and procurement teams that pay suppliers by bank transfer and cannot afford a full compliance department.
